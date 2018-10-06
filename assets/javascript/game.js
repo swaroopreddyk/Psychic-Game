@@ -9,8 +9,8 @@ document.onkeyup = function (event) {
   let userGuess = event.key;
   userGuess = userGuess.toLowerCase();
   var compGuess = letters[Math.floor(Math.random() * letters.length)];
-  console.log("Computer Guess: "+ compGuess);
-  console.log("User Guess: "+userGuess);
+  console.log("Computer Guess: " + compGuess);
+  console.log("User Guess: " + userGuess);
 
   //save the user pressed keys and display to the screen
   guessedLetters.push(userGuess);
@@ -19,25 +19,28 @@ document.onkeyup = function (event) {
 
   if (compGuess === event.key) {
     wins++;
+    resetGame();
   } else if (compGuess != event.key) {
-    losses++;
     guessesLeft--;
-    document.querySelector('#game').innerHTML = "<p>Wins: " + wins + "</p>" +
-      "<p> Losses: " + losses + "</p>" +
-      "<p> Guesses Left: " + guessesLeft + "</p>"
-    "<p> Guessed Letters: " + guessedLetters + "</p>";
+    screenDisplay();
   }
 
-  //Reset counters and game
   if (guessesLeft === 0) {
-    wins = 0;
-    losses = 0;
+    losses++;
+    resetGame();
+  }
+
+  function resetGame() {
     guessesLeft = 9;
     guessedLetters = [];
+    document.querySelector('#guessedLetters').innerHTML = "Guessed letters: " + guessedLetters;
+    screenDisplay();
+  };
 
+  function screenDisplay() {
     document.querySelector('#game').innerHTML = "<p>Wins: " + wins + "</p>" +
-    "<p> Losses: " + losses + "</p>" +
-    "<p> Guesses Left: " + guessesLeft + "</p>";
+      "<p> Losses: " + losses + "</p>" +
+      "<p> Guesses Left: " + guessesLeft + "</p>";
   }
 
 };
